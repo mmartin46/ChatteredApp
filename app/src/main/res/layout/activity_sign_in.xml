@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.SignInActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textSize="@dimen/_35sdp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryDark"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_152sdp"
+            app:layout_constraintBottom_toTopOf="@id/login_title">
+        </TextView>
+
+        <TextView
+            android:id="@+id/login_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_to_text"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/primaryDark"
+            android:gravity="center"
+            android:padding="@dimen/_3ssp"
+            app:layout_constraintTop_toBottomOf="@id/title">
+        </TextView>
+
+        <EditText
+            android:id="@+id/textEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:autofillHints=""
+            android:background="@color/inputColor"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/_10ssp"
+            android:textColorHint="#37474F"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toTopOf="@id/textPassword"
+            app:layout_constraintTop_toBottomOf="@id/login_title"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:autofillHints=""
+            android:background="@color/inputColor"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/_10ssp"
+            android:textColorHint="#37474F"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toTopOf="@id/submitBtn"
+            app:layout_constraintTop_toBottomOf="@id/textEmail"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60ssp"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:backgroundTint="@color/primaryDark"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/textPassword" />
+
+        <TextView
+            android:id="@+id/createAccountBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:gravity="center_horizontal"
+            android:text="@string/create_new_account"
+            android:textColor="@color/primaryDark"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/submitBtn"
+            tools:ignore="TextSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

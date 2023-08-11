@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ChatterApp</string>
+    <string name="title">ChatterApp</string>
+    <string name="login">LOGIN</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="password">Password</string>
+    <string name="login_to_text">Login To Text</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="add_icon">Add Icon</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login_to_existing_account">Login To Existing Account</string>
+</resources>

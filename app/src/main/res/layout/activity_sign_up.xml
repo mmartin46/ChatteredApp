@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.SignUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_account"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryDark"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/_20ssp"
+            app:layout_constraintBottom_toTopOf="@id/iconLayout">
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/iconLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            tools:ignore="MissingConstraints">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:background="@drawable/background_image"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:riv_oval="true"
+                app:layout_constraintHeight="@dimen/_25sdp"
+                app:layout_constraintBottom_toTopOf="@id/textName"
+                tools:ignore="MissingConstraints" />
+            
+            <TextView
+                android:id="@+id/textAddIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/add_icon"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"/>
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/textName"
+            android:layout_marginTop="@dimen/_15ssp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:hint="@string/name"
+            android:textSize="@dimen/_10ssp"
+            android:paddingStart="@dimen/_10ssp"
+            android:background="@color/inputColor"
+            app:layout_constraintBottom_toTopOf="@id/iconLayout"
+            android:autofillHints=""
+            android:inputType="textPersonName"
+            tools:ignore="RtlSymmetry" />
+
+
+        <EditText
+            android:id="@+id/textEmail"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:hint="@string/email"
+            android:textSize="@dimen/_10ssp"
+            android:paddingStart="@dimen/_10ssp"
+            android:background="@color/inputColor"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toTopOf="@id/textPassword"
+            app:layout_constraintTop_toBottomOf="@id/textName"
+            android:autofillHints=""
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:hint="@string/password"
+            android:textSize="@dimen/_10ssp"
+            android:paddingStart="@dimen/_10ssp"
+            android:background="@color/inputColor"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/textEmail"
+            android:autofillHints=""
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/textConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50ssp"
+            android:hint="@string/confirm_password"
+            android:textSize="@dimen/_10ssp"
+            android:paddingStart="@dimen/_10ssp"
+            android:background="@color/inputColor"
+            android:layout_marginTop="@dimen/_20ssp"
+            android:inputType="textPassword"
+            app:layout_constraintTop_toBottomOf="@id/textPassword"
+            android:autofillHints=""
+            tools:ignore="RtlSymmetry" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60ssp"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:backgroundTint="@color/primaryDark"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/textConfirmPassword"/>
+
+
+            <ProgressBar
+                android:id="@+id/progBar"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+        </FrameLayout>
+
+
+
+        <TextView
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryDark"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:text="@string/login_to_existing_account"
+            android:layout_marginTop="@dimen/_10ssp"
+            app:layout_constraintTop_toBottomOf="@id/submitBtn"/>
+
+    </LinearLayout>
+
+</ScrollView>
