@@ -41,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         // Returns the outermost view in the layout file.
         setContentView(binding.getRoot());
+        preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();
     }
 
@@ -85,10 +86,18 @@ public class SignUpActivity extends AppCompatActivity {
         database.collection(Constants.KEY_ALL_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {
-
+                    loading(false);
+                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                    preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
+                    preferenceManager.putString(Constants.KEY_NAME, binding.textName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_ICON, encodedIcon);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 })
                 .addOnFailureListener(exception -> {
-
+                    loading(false);
+                    showToast(exception.getMessage());
                 });
     }
 

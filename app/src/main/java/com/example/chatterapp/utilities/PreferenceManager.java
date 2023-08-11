@@ -23,6 +23,12 @@ public class PreferenceManager {
         return sharedPreferences.getBoolean(key, false);
     }
 
+    public void putString(String key, String value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
     public String getString(String key) {
         return sharedPreferences.getString(key, null);
     }
