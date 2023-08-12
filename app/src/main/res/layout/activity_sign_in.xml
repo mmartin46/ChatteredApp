@@ -67,20 +67,40 @@
             android:paddingStart="@dimen/_10ssp"
             android:textColorHint="#37474F"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintBottom_toTopOf="@id/submitBtn"
+            app:layout_constraintBottom_toTopOf="@id/submitLayout"
             app:layout_constraintTop_toBottomOf="@id/textEmail"
             tools:ignore="RtlSymmetry" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/submitBtn"
+        <FrameLayout
+            android:id="@+id/submitLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60ssp"
-            android:layout_marginTop="@dimen/_20ssp"
-            android:backgroundTint="@color/primaryDark"
-            android:text="@string/login"
-            android:textColor="@color/white"
-            app:cornerRadius="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/textPassword" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@id/textPassword"
+            app:layout_constraintBottom_toTopOf="@id/createAccountBtn"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60ssp"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:backgroundTint="@color/primaryDark"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/textPassword" />
+
+            <ProgressBar
+                android:id="@+id/progBar"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+
+        </FrameLayout>
+
+
 
         <TextView
             android:id="@+id/createAccountBtn"
@@ -92,7 +112,7 @@
             android:textColor="@color/primaryDark"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/submitBtn"
+            app:layout_constraintTop_toBottomOf="@id/submitLayout"
             tools:ignore="TextSizeCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

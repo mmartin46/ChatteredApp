@@ -24,6 +24,9 @@ public class PreferenceManager {
     }
 
     public void putString(String key, String value) {
+        // Modifies values in a SharedPreferences object
+        // Changes are batched and not copied until apply()
+        // or commit() is called.
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();

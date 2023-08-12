@@ -80,13 +80,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Load information to the firebase
         user.put(Constants.KEY_NAME, binding.textName.getText().toString());
-        user.put(Constants.KEY_EMAIL, binding.textName.getText().toString());
-        user.put(Constants.KEY_PASSWORD, binding.textName.getText().toString());
+        user.put(Constants.KEY_EMAIL, binding.textEmail.getText().toString());
+        user.put(Constants.KEY_PASSWORD, binding.textPassword.getText().toString());
         user.put(Constants.KEY_ICON, encodedIcon);
         database.collection(Constants.KEY_ALL_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {
                     loading(false);
+                    // Save the information
                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                     preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(Constants.KEY_NAME, binding.textName.getText().toString());
