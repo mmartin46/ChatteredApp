@@ -5,4 +5,5 @@
     <color name="primaryDark">#009186</color>
     <color name="primaryLight">#00D5C4</color>
     <color name="inputColor">#C3C3C3</color>
+    <color name="hintColor">#BEFFFA</color>
 </resources>

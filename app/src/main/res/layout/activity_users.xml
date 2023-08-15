@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/primaryLight"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.UsersActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,12 +18,14 @@
         tools:ignore="MissingConstraints">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iconProfile"
+            android:id="@+id/backBtn"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_gravity="left"
+            android:src="@drawable/ic_back"
+            android:padding="@dimen/_8sdp"
             android:scaleType="centerCrop"
             android:background="@drawable/background_image"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,38 +34,23 @@
 
 
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/iconSignOut"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_power"
-            android:padding="@dimen/_8sdp"
-            android:background="@drawable/background_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="@dimen/_2sdp"/>
-        
         <TextView
-            android:id="@+id/textName"
-            android:layout_width="0dp"
+            android:id="@+id/selectLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_35sdp"
             android:layout_marginEnd="@dimen/_35sdp"
+            android:text="Select User"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iconProfile"
-            app:layout_constraintEnd_toEndOf="@id/iconSignOut"
-            app:layout_constraintStart_toStartOf="@id/iconProfile"
-            app:layout_constraintTop_toTopOf="@id/iconProfile"/>
+            app:layout_constraintBottom_toBottomOf="@id/backBtn"
+            app:layout_constraintStart_toStartOf="@id/backBtn"
+            app:layout_constraintTop_toTopOf="@id/backBtn"/>
 
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -71,21 +59,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolBarLayout">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/userRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="@dimen/_20sdp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <ProgressBar
+            android:id="@+id/progBar"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/textErrorMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:gravity="center"
+            android:textColor="@color/primaryDark"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="gone"/>
     </FrameLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createNewChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_25sdp"
-        android:layout_marginRight="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/primaryLight"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,5 @@
     <string name="add_icon">Add Icon</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login_to_existing_account">Login To Existing Account</string>
+    <string name="type_here">Type here...</string>
 </resources>
