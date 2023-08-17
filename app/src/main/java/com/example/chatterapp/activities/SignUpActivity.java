@@ -2,6 +2,7 @@ package com.example.chatterapp.activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,11 @@ import com.example.chatterapp.databinding.ActivitySignInBinding;
 import com.example.chatterapp.databinding.ActivitySignUpBinding;
 import com.example.chatterapp.utilities.Constants;
 import com.example.chatterapp.utilities.PreferenceManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -69,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -83,23 +90,9 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, binding.textEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.textPassword.getText().toString());
         user.put(Constants.KEY_ICON, encodedIcon);
-        database.collection(Constants.KEY_ALL_USERS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    // Save the information
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_NAME, binding.textName.getText().toString());
-                    preferenceManager.putString(Constants.KEY_ICON, encodedIcon);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                })
-                .addOnFailureListener(exception -> {
-                    loading(false);
-                    showToast(exception.getMessage());
-                });
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+
     }
 
     private String encodeIcon(Bitmap bitmap) {
