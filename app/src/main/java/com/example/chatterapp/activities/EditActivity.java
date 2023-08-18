@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -134,6 +135,14 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    private CollectionReference getUsers() {
+        return database.collection(Constants.KEY_ALL_USERS);
+    }
+
+    private CollectionReference getConversations() {
+        return database.collection(Constants.KEY_COLLECTION_CONVERSATIONS);
+    }
+
     private void passUserData() {
 
         String userName = binding.origUserName.getText().toString().trim();
@@ -147,8 +156,9 @@ public class EditActivity extends AppCompatActivity {
         user.put(Constants.KEY_ICON, encodedIcon);
 
 
-        database.collection(Constants.KEY_ALL_USERS)
-                .whereEqualTo(Constants.KEY_NAME, userName)
+
+        // Update user
+        getUsers().whereEqualTo(Constants.KEY_NAME, userName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -156,7 +166,6 @@ public class EditActivity extends AppCompatActivity {
                         if (task.isSuccessful() && !task.getResult().isEmpty()) {
 
 
-                            System.out.println("USER FOUND");
                             DocumentSnapshot docSnap = task.getResult().getDocuments().get(0);
                             String documentID = docSnap.getId();
 
@@ -167,7 +176,7 @@ public class EditActivity extends AppCompatActivity {
                                     ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            showToast("Profile Updated");
+                                            showToast("Profile Updated. Logout to update changes");
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -177,6 +186,70 @@ public class EditActivity extends AppCompatActivity {
                                     });
                         } else {
                             showToast("Invalid User Credentials");
+                        }
+                    }
+                });
+
+        // Update conversations
+        getConversations().whereEqualTo(Constants.KEY_SENDER_NAME, userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+
+                            DocumentSnapshot docSnap = task.getResult().getDocuments().get(0);
+                            String documentId = docSnap.getId();
+
+
+                            database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                                    .document(documentId)
+                                    .update(
+                                            Constants.KEY_SENDER_NAME, newUserName,
+                                            Constants.KEY_ICON, encodedIcon
+                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+
+        getConversations().whereEqualTo(Constants.KEY_RECEIVER_NAME, userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+
+                            DocumentSnapshot docSnap = task.getResult().getDocuments().get(0);
+                            String documentId = docSnap.getId();
+
+
+                            database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                                    .document(documentId)
+                                    .update(
+                                            Constants.KEY_RECEIVER_NAME, newUserName,
+                                            Constants.KEY_ICON, encodedIcon
+                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    });
                         }
                     }
                 });
