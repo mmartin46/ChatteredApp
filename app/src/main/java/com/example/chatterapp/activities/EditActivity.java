@@ -3,6 +3,7 @@ package com.example.chatterapp.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,17 +20,29 @@ import com.example.chatterapp.R;
 import com.example.chatterapp.databinding.ActivityEditBinding;
 import com.example.chatterapp.utilities.Constants;
 import com.example.chatterapp.utilities.PreferenceManager;
+import com.example.chatterapp.utilities.UserQuery;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -45,7 +58,13 @@ public class EditActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+
+        init();
         setListeners();
+    }
+
+    private void init() {
+        database = FirebaseFirestore.getInstance();
     }
 
     private void setListeners() {
@@ -103,17 +122,67 @@ public class EditActivity extends AppCompatActivity {
         } else if (binding.confirmPassword.getText().toString().trim().isEmpty()) {
             showToast("Please confirm your password");
             return false;
-        } else if (binding.userPassword.getText().toString()
+        } else if (!binding.userPassword.getText().toString()
                 .equals(binding.confirmPassword.getText().toString())) {
             showToast("Passwords don't match");
             return false;
         } else {
             // TODO:
             // Check to make sure the credentials have a match
+            passUserData();
             return true;
         }
     }
 
+    private void passUserData() {
+
+        String userName = binding.origUserName.getText().toString().trim();
+        String newUserName = binding.newUserName.getText().toString().trim();
+        String userPass = binding.userPassword.getText().toString().trim();
+
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(Constants.KEY_NAME, newUserName);
+        user.put(Constants.KEY_PASSWORD, userPass);
+        user.put(Constants.KEY_ICON, encodedIcon);
+
+
+        database.collection(Constants.KEY_ALL_USERS)
+                .whereEqualTo(Constants.KEY_NAME, userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+
+
+                            System.out.println("USER FOUND");
+                            DocumentSnapshot docSnap = task.getResult().getDocuments().get(0);
+                            String documentID = docSnap.getId();
+
+                            database.collection(Constants.KEY_ALL_USERS)
+                                    .document(documentID)
+                                    .update(
+                                            user
+                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            showToast("Profile Updated");
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            showToast("Profile failed to update");
+                                        }
+                                    });
+                        } else {
+                            showToast("Invalid User Credentials");
+                        }
+                    }
+                });
+
+
+    }
 
     // Load the icon
     private final ActivityResultLauncher<Intent> chooseIcon = registerForActivityResult(
