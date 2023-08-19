@@ -2,6 +2,7 @@ package com.example.chatterapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.example.chatterapp.models.ChatMessage;
 import com.example.chatterapp.models.User;
 import com.example.chatterapp.utilities.Constants;
 import com.example.chatterapp.utilities.PreferenceManager;
+import com.example.chatterapp.utilities.UserQuery;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,8 +23,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity<CustomParcelable> extends AppCompatActivity {
 
     private ActivityChatBinding binding;
     private User receivedUser;
@@ -42,10 +42,13 @@ public class ChatActivity extends AppCompatActivity {
     private List<ChatMessage> chatMessageList;
     private String conversionId = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
+
+
         setContentView(binding.getRoot());
         setListeners();
         loadReceiverDetails();
@@ -88,6 +91,7 @@ public class ChatActivity extends AppCompatActivity {
             conversion.put(Constants.KEY_RECEIVER_ID, receivedUser.id);
             conversion.put(Constants.KEY_RECEIVER_NAME, receivedUser.name);
             conversion.put(Constants.KEY_RECEIVER_ICON, receivedUser.icon);
+
 
             conversion.put(Constants.KEY_LAST_MESSAGE, binding.textInput.getText().toString());
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
@@ -159,6 +163,15 @@ public class ChatActivity extends AppCompatActivity {
     private void setListeners() {
         binding.backBtn.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        infoButtonClicked();
+    }
+
+    private void infoButtonClicked() {
+        binding.infoBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+            intent.putExtra("received_user_extra", receivedUser);
+            startActivity(intent);
+        });
     }
 
     private String getReadableDateTime(Date date) {

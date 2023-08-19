@@ -59,4 +59,6 @@
     <string name="change_username">Change Username</string>
     <string name="new_username">New Username</string>
     <string name="original_username">Original Username</string>
+    <string name="contact_info">Contact Info</string>
+    <string name="user_name">User Name</string>
 </resources>

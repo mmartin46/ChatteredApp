@@ -89,6 +89,7 @@ public class EditActivity extends AppCompatActivity {
 
             binding.userIconText.setVisibility(View.GONE);
         });
+
     }
 
     private void loadUserDetails() {
